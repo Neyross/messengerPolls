@@ -1,6 +1,30 @@
 #!/usr/bin/python3
 
+from selenium import webdriver
+import time
+import id
+
+def connect(driver, username, password):
+    cookie = driver.find_element_by_xpath("/html/body/div[2]/div[2]/div/div/div/div/div[3]/button[2]")
+    cookie.click()
+    elements = driver.find_elements_by_css_selector("#email")
+    username_elem = elements[0]
+    username_elem.clear()
+    username_elem.send_keys(username)
+    elements = driver.find_elements_by_css_selector("#pass")
+    pass_elem = elements[0]
+    pass_elem.clear()
+    pass_elem.send_keys(password)
+    elements = driver.find_elements_by_css_selector("#loginbutton")
+    login = elements[0]
+    login.click()
+
 def main():
-    return 1
+    username = id.username
+    password = id.password
+    driver = webdriver.Firefox()
+    driver.get("https://www.messenger.com")
+    connect(driver, username, password)
+    return 0
 
 main()
