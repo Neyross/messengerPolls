@@ -16,6 +16,7 @@ def check_convos(driver):
         path = "./convos/" + i[0]
         if not os.path.exists(path):
             os.mknod(path)
+
 def connect(driver, username, password):
     cookie = driver.find_element_by_xpath("/html/body/div[2]/div[2]/div/div/div/div/div[3]/button[2]")
     cookie.click()
