@@ -3,20 +3,29 @@
 from selenium import webdriver
 import time
 import id
+import os
 
+def check_convos(driver):
+    convos_split = []
+    convos = driver.find_elements_by_partial_link_text("")
+    for i in range(1, len(convos) - 1):
+        convos_split.append(convos[i].text.split('\n'))
+    for i in convos_split:
+        if (i[0] == "En ligne"):
+            i.pop(0)
+        path = "./convos/" + i[0]
+        if not os.path.exists(path):
+            os.mknod(path)
 def connect(driver, username, password):
     cookie = driver.find_element_by_xpath("/html/body/div[2]/div[2]/div/div/div/div/div[3]/button[2]")
     cookie.click()
-    elements = driver.find_elements_by_css_selector("#email")
-    username_elem = elements[0]
+    username_elem = driver.find_element_by_css_selector("#email")
     username_elem.clear()
     username_elem.send_keys(username)
-    elements = driver.find_elements_by_css_selector("#pass")
-    pass_elem = elements[0]
+    pass_elem = driver.find_element_by_css_selector("#pass")
     pass_elem.clear()
     pass_elem.send_keys(password)
-    elements = driver.find_elements_by_css_selector("#loginbutton")
-    login = elements[0]
+    login = driver.find_element_by_css_selector("#loginbutton")
     login.click()
 
 def main():
@@ -25,6 +34,9 @@ def main():
     driver = webdriver.Firefox()
     driver.get("https://www.messenger.com")
     connect(driver, username, password)
+    time.sleep(5)
+    check_convos(driver)
+    driver.quit()
     return 0
 
 main()
