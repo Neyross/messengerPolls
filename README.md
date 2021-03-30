@@ -1,3 +1,3 @@
 # MessengerPolls
-A bot to make polls in messenger built with Selenium
+A bot for messenger built with Selenium
 
